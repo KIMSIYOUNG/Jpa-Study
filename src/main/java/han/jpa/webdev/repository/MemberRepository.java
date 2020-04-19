@@ -3,17 +3,16 @@ package han.jpa.webdev.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
 import han.jpa.webdev.domain.Member;
+import lombok.RequiredArgsConstructor;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository {
-
-	@PersistenceContext
-	private EntityManager manager;
+	private final EntityManager manager;
 
 	public void save(Member member) {
 		manager.persist(member);
