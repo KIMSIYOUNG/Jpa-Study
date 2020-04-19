@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 
 import han.jpa.webdev.domain.Category;
+import han.jpa.webdev.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,4 +35,20 @@ public abstract class Item {
 
 	@ManyToMany(mappedBy = "items")
 	private List<Category> categories = new ArrayList<>();
+
+	public void addStock(int quantity) {
+		this.stockQuantity += quantity;
+	}
+
+	public void minusStock(int quantity) {
+		validateMinus(quantity);
+		this.stockQuantity -= quantity;
+	}
+
+	public void validateMinus(int quantity) {
+		if (this.stockQuantity - quantity < 0) {
+			throw new NotEnoughStockException("재고가 부족합니다.");
+		}
+	}
+
 }
