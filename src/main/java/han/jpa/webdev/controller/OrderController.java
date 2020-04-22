@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import han.jpa.webdev.domain.Member;
 import han.jpa.webdev.domain.Order;
 import han.jpa.webdev.domain.item.Item;
+import han.jpa.webdev.repository.OrderSearch;
 import han.jpa.webdev.service.ItemService;
 import han.jpa.webdev.service.MemberService;
 import han.jpa.webdev.service.OrderService;

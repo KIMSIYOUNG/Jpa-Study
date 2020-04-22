@@ -13,6 +13,7 @@ import han.jpa.webdev.domain.OrderItem;
 import han.jpa.webdev.domain.item.Item;
 import han.jpa.webdev.repository.MemberRepository;
 import han.jpa.webdev.repository.OrderRepository;
+import han.jpa.webdev.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 
 @Service
