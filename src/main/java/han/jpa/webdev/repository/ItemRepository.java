@@ -1,6 +1,7 @@
 package han.jpa.webdev.repository;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
@@ -20,7 +21,7 @@ public class ItemRepository {
 	}
 
 	private void saveWIthIdNull(Item item) {
-		if (item.getId() == null) {
+		if (Objects.isNull(item.getId())) {
 			manager.persist(item);
 		}
 	}
