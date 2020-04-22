@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import han.jpa.webdev.controller.OrderSearch;
 import han.jpa.webdev.domain.Delivery;
 import han.jpa.webdev.domain.DeliveryStatus;
 import han.jpa.webdev.domain.Member;
@@ -24,17 +23,7 @@ public class OrderService {
 	private final MemberRepository memberRepository;
 	private final ItemService itemService;
 
-	public List<Order> findOrders(OrderSearch orderSearch) {
-
-	}
-
-	public void cancelOrder(Long orderId) {
-		Order order = orderRepository.findOne(orderId);
-		//주문 취소
-		order.cancel();
-	}
-
-	public void order(Long memberId, Long itemId, int count) {
+	public Long order(Long memberId, Long itemId, int count) {
 		//엔티티 조회
 		Member member = memberRepository.findOne(memberId);
 		Item item = itemService.findOne(itemId);
@@ -47,7 +36,17 @@ public class OrderService {
 		//주문 생성
 		Order order = Order.createOrder(member, delivery, orderItem);
 		//주문 저장
-		// orderRepository.save(order);
-		// return order.getId();
+		orderRepository.save(order);
+		return order.getId();
+	}
+
+	public void cancelOrder(Long orderId) {
+		Order order = orderRepository.findOne(orderId);
+		//주문 취소
+		order.cancel();
+	}
+
+	public List<Order> findOrders(OrderSearch orderSearch) {
+		return orderRepository.findAllByCriteria(orderSearch);
 	}
 }
