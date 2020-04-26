@@ -17,7 +17,7 @@ public class MemberRepository {
 	public void save(Member member) {
 		manager.persist(member);
 	}
-	
+
 	public Member findOne(Long id) {
 		return manager.find(Member.class, id);
 	}
