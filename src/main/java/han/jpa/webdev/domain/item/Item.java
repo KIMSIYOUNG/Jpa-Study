@@ -1,4 +1,4 @@
-package han.jpa.webdev.domain;
+package han.jpa.webdev.domain.item;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 
+import han.jpa.webdev.domain.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

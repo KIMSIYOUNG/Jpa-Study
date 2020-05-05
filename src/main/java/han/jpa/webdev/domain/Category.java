@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import han.jpa.webdev.domain.item.Item;
 import lombok.Getter;
 
 @Entity

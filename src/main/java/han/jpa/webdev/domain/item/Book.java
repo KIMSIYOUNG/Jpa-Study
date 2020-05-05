@@ -1,4 +1,4 @@
-package han.jpa.webdev.domain;
+package han.jpa.webdev.domain.item;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

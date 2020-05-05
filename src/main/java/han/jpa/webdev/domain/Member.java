@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -33,4 +34,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private final List<Order> orders = new ArrayList<>();
 
+    @Builder
+    public Member(String name) {
+        this.name = name;
+    }
 }
