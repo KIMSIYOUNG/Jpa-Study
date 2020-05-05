@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
 import lombok.Getter;
@@ -33,7 +32,6 @@ public abstract class Item {
     private Long price;
 
     private Long stockQuantity;
-    @ManyToMany
-    @JoinColumn(name = "category_item")
+    @ManyToMany(mappedBy = "items")
     private List<Category> categories;
 }
