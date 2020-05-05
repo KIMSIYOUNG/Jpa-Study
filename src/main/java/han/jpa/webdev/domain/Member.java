@@ -30,7 +30,7 @@ public class Member {
     @Embedded
     private final Address address;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "member")
     private final List<Order> orders = new ArrayList<>();
 
 }
