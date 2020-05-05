@@ -3,13 +3,15 @@ package han.jpa.webdev.domain;
 import javax.persistence.Embeddable;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Embeddable
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Address {
-    private final String city;
-    private final String street;
-    private final String zipCode;
+    private String city;
+    private String street;
+    private String zipCode;
 }

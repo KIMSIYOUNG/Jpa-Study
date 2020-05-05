@@ -13,22 +13,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Entity
 @Getter
 @Table(name = "member")
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
-    private final String name;
+    private String name;
 
     @Embedded
-    private final Address address;
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private final List<Order> orders = new ArrayList<>();
