@@ -11,19 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 class MemberRepositoryTest {
 
-	@Autowired
-	MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
-	@Test
-	@Transactional
-	@Rollback(false)
-	void testMember() {
-		Member member = new Member();
-		member.setUsername("MemberA");
-		final Long savedId = memberRepository.save(member);
-		final Member findMember = memberRepository.find(savedId);
+    @Test
+    @Transactional
+    @Rollback(false)
+    void testMember() {
+        Member member = new Member();
+        member.setUsername("MemberA");
+        final Long savedId = memberRepository.save(member);
+        final Member findMember = memberRepository.find(savedId);
 
-		assertThat(findMember.getId()).isEqualTo(member.getId());
-		assertThat(findMember).isEqualTo(member);
-	}
+        assertThat(findMember.getId()).isEqualTo(member.getId());
+        assertThat(findMember).isEqualTo(member);
+    }
 }
