@@ -21,5 +21,4 @@ public class MemberController {
         Member member = Member.builder().name(request.getName()).build();
         return memberService.save(member);
     }
-
 }

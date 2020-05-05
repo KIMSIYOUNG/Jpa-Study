@@ -1,7 +1,8 @@
 package han.jpa.webdev.controller;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import han.jpa.webdev.dto.req.MemberRequestDto;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 class MemberControllerTest {
 
@@ -20,16 +22,16 @@ class MemberControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private MemberController memberController;
+    private ObjectMapper objectMapper;
 
     @Test
-    void createTest() {
-        MemberRequestDto dto = new MemberRequestDto("DDD");
-        mockMvc.perform(post("http://localhost:8080/member/save")
-            .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect()
-
-        Long save = memberController.save(dto);
-        assertThat(save).isEqualTo(1);
+    void createTest() throws Exception {
+        MemberRequestDto request = new MemberRequestDto("DDD");
+        mockMvc.perform(post("/member/save")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsString(request)))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andExpect(content().string("1"));
     }
 }
