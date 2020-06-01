@@ -1,5 +1,6 @@
 package com.springdata.han;
 
+import static com.querydsl.jpa.JPAExpressions.*;
 import static com.springdata.han.QMember.*;
 import static com.springdata.han.QTeam.*;
 import static org.assertj.core.api.Assertions.*;
@@ -18,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @SpringBootTest
@@ -268,7 +270,7 @@ public class QueryDslTest {
         List<Member> result = queryFactory
             .selectFrom(member)
             .where(member.age.eq(
-                JPAExpressions.select(memberSub.age.max())
+                select(memberSub.age.max())
                     .from(memberSub)
             ))
             .fetch();
@@ -277,6 +279,62 @@ public class QueryDslTest {
             System.out.println(member5);
         }
     }
-    
+
+    @Test
+    void subQuery2() {
+        QMember memberSub = new QMember("memberSub");
+        List<Tuple> result = queryFactory
+            .select(member.name,
+                select(memberSub.age.avg())
+                    .from(memberSub)
+            )
+            .from(member)
+            .fetch();
+        for (Tuple tuple : result) {
+            System.out.println(tuple);
+        }
+    }
+
+    @Test
+    void caseWhen() {
+        List<String> result = queryFactory
+            .select(member.age
+                .when(10).then("어린이")
+                .when(20).then("older")
+                .otherwise("else")
+            )
+            .from(member)
+            .fetch();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void caseWhenComplex() {
+        List<String> result = queryFactory
+            .select(new CaseBuilder()
+                .when(member.age.between(0, 20)).then("AAA")
+                .when(member.age.between(20, 30)).then("BBB")
+                .otherwise("CCC")
+            )
+            .from(member)
+            .fetch();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void plusConst() {
+        List<Tuple> result = queryFactory
+            .select(member.name, Expressions.constant("A"))
+            .from(member)
+            .fetch();
+        result.forEach(System.out::println);
+
+        String member = queryFactory
+            .select(QMember.member.name.concat("_").concat(QMember.member.age.stringValue()))
+            .from(QMember.member)
+            .where(QMember.member.name.eq("member1"))
+            .fetchOne();
+        assertThat(member).isEqualTo("member1_20");
+    }
 }
 
